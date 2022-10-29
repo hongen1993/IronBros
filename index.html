@@ -5,11 +5,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>IronBros</title>
+    <link rel="stylesheet" href="styles/style.css" />
 </head>
 
 <body>
-    <p>hello iron bros</p>
+    <div class="hero">
+        <div class="game-intro">
+            <img src="./assets/ironbros.png" alt="" class="logo-img" />
+            <button id="start-button">StartGame</button>
+        </div>
+        <div class="game">
+            <canvas class="non-display" id="canvas"></canvas>
+        </div>
+    </div>
+
+    <script src="./src/background.js"></script>
+    <script src="./src/score.js"></script>
+    <script src="./src/player.js"></script>
+    <script src="./src/game.js"></script>
+    <script src="./src/index.js"></script>
+
 </body>
 
 </html>
