@@ -5,7 +5,7 @@ class Background {
         this.height = Height
 
         this.backgroundImg = new Image()
-        this.backgroundImg.src = './assets/background.jpg'
+        this.backgroundImg.src = './assets/backgroundMario.png'
     }
 
     draw() {
