@@ -12,6 +12,7 @@ const Game = {
     height: undefined,
 
     player: undefined,
+    playerTwo: undefined,
     background: undefined,
 
     score: 0,
@@ -44,15 +45,18 @@ const Game = {
             this.drawAll()
         }, 1000 / this.FPS)
     },
-
     drawAll() {
         this.background.draw()
-        this.player.draw()
+        this.shit.draw()
+        this.shit.update()
+        this.fart.draw()
+        this.fart.update()
         this.score.draw()
     },
 
     generateAll() {
-        this.player = new Player(this.ctx, this.width, this.height)
+        this.shit = new Shit(this.ctx, this.width, this.height)
+        this.fart = new Fart(this.ctx, this.width, this.height)
         this.background = new Background(this.ctx, this.width, this.height)
         this.score = new Score(this.ctx, this.width, this.height)
     },
@@ -62,3 +66,4 @@ const Game = {
     },
 
 }
+
