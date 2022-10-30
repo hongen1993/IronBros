@@ -48,6 +48,7 @@ const Game = {
     drawAll() {
         this.background.draw()
         this.player.draw()
+        this.player.update()
         this.score.draw()
     },
 
