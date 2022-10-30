@@ -40,6 +40,8 @@ const Game = {
 
         this.intervalId = setInterval(() => {
             this.framesCounter++
+            if (this.framesCounter % 35 === 0) this.shit.cooldown++
+            if (this.framesCounter % 35 === 0) this.fart.cooldown++
             if (this.framesCounter % 60 === 0) this.score.score++
             this.clearAll()
             this.drawAll()
@@ -47,18 +49,29 @@ const Game = {
     },
     drawAll() {
         this.background.draw()
+        this.score.draw()
+
         this.shit.draw()
         this.shit.update()
         this.fart.draw()
         this.fart.update()
-        this.score.draw()
+
+        this.kleenex.draw()
+        this.kleenex.move()
+        this.kleenexb.draw()
+        this.kleenexb.move()
     },
 
     generateAll() {
-        this.shit = new Shit(this.ctx, this.width, this.height)
-        this.fart = new Fart(this.ctx, this.width, this.height)
         this.background = new Background(this.ctx, this.width, this.height)
         this.score = new Score(this.ctx, this.width, this.height)
+
+        this.shit = new Shit(this.ctx, this.width, this.height)
+        this.fart = new Fart(this.ctx, this.width, this.height)
+
+        this.kleenex = new Kleenex(this.ctx, this.width, this.height)
+        this.kleenexb = new KleenexB(this.ctx, this.width, this.height)
+
     },
 
     clearAll() {

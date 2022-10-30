@@ -4,14 +4,15 @@ class Player {
         this.ctxWidth = ctxWidth
         this.ctxHeight = ctxHeight
         this.floor = 90
+        this.cooldown = 1
+
+        this.canJump = false
 
         this.width = 50
         this.height = 60
 
         this.posX = 100
         this.posY = ctxHeight - this.floor - this.height
-
-        this.canJump = false
 
         this.velX = 0
         this.velY = 0
@@ -45,6 +46,7 @@ class Player {
         if (this.canJump) {
             this.velY -= 35
             this.canJump = false
+            this.cooldown = 0
         }
     }
 
@@ -52,8 +54,8 @@ class Player {
 
 
 class Shit extends Player {
-    constructor(ctx, ctxWidth, ctxHeight, floor, width, height, canJump, posX, posY, velX, velY, gravity, keys) {
-        super(ctx, ctxWidth, ctxHeight, floor, width, height, canJump, posX, posY, velX, velY, gravity, keys)
+    constructor(ctx, ctxWidth, ctxHeight, floor, cooldown, width, height, canJump, posX, posY, velX, velY, gravity, keys) {
+        super(ctx, ctxWidth, ctxHeight, floor, cooldown, width, height, canJump, posX, posY, velX, velY, gravity, keys)
 
         this.playerImg = new Image()
         this.playerImg.src = "./assets/mrcaquita.png";
@@ -68,7 +70,7 @@ class Shit extends Player {
 
         if (this.posY + this.height + this.velY >= this.ctxHeight - this.floor) {
             this.velY = 0
-            this.canJump = true
+            if (this.cooldown >= 1) this.canJump = true
         }
 
         if (this.keys.leftKeyPressed) this.moveLeft()
@@ -125,8 +127,8 @@ class Shit extends Player {
 }
 
 class Fart extends Player {
-    constructor(ctx, ctxWidth, ctxHeight, floor, width, height, canJump, posY, velX, velY, keys) {
-        super(ctx, ctxWidth, ctxHeight, floor, width, height, canJump, posY, velX, velY, keys)
+    constructor(ctx, ctxWidth, ctxHeight, floor, cooldown, width, height, canJump, posY, velX, velY, keys) {
+        super(ctx, ctxWidth, ctxHeight, floor, cooldown, width, height, canJump, posY, velX, velY, keys)
 
         this.posX = 200
 
@@ -145,7 +147,7 @@ class Fart extends Player {
 
         if (this.posY + this.height + this.velY >= this.ctxHeight - this.floor) {
             this.velY = 0
-            this.canJump = true
+            if (this.cooldown >= 1) this.canJump = true
         }
 
         if (this.keys.leftKeyPressed) this.moveLeft()
