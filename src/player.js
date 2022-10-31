@@ -1,5 +1,7 @@
 class Player {
-    constructor(ctx, ctxWidth, ctxHeight) {
+    // NO NECESITAMOS 3 CLASES. CON UNA ME VALE
+    constructor(ctx, ctxWidth, ctxHeight, posX = 100, gravity = 3, playerImg = "./assets/mrcaquita.png") {
+        // 
         this.ctx = ctx
         this.ctxWidth = ctxWidth
         this.ctxHeight = ctxHeight
@@ -11,37 +13,38 @@ class Player {
         this.width = 50
         this.height = 60
 
+        this.damageReceived = 0 //hacer bien las colisiones, esto no haría falta
         this.lives = 3
 
-        this.posX = 100
+        this.posX = posX
         this.posY = ctxHeight - this.floor - this.height
 
-        this.velX = 0
         this.velY = 0
-        this.gravity = 3
+        this.gravity = gravity
 
         this.keys = {
-            leftKeyPressed: false,
-            rightKeyPressed: false,
-            upKeyPressed: false,
+            aKeyPressed: false,
+            dKeyPressed: false,
+            wKeyPressed: false,
+            sKeyPressed: false,
         }
 
+        this.playerImg = new Image()
+        this.playerImg.src = playerImg
+
+        this.init()
     }
 
     init() {
         this.setEventListeners()
     }
 
-    draw() {
-        this.ctx.drawImage(this.playerImg, this.posX, this.posY, this.width, this.height)
-    }
-
     moveLeft() {
-        if (this.posX > 0) this.posX -= 10
+        if (this.posX > 100) this.posX -= 10
     }
 
     moveRight() {
-        if (this.posX < this.ctxWidth - this.width) this.posX += 10
+        if (this.posX < 700) this.posX += 10
     }
 
     jump() {
@@ -52,21 +55,9 @@ class Player {
         }
     }
 
-}
-
-
-class Shit extends Player {
-    constructor(ctx, ctxWidth, ctxHeight, floor, cooldown, width, height, canJump, posX, posY, velX, velY, gravity, keys, lives) {
-        super(ctx, ctxWidth, ctxHeight, floor, cooldown, width, height, canJump, posX, posY, velX, velY, gravity, keys, lives)
-
-        this.playerImg = new Image()
-        this.playerImg.src = "./assets/mrcaquita.png";
-
-        this.init()
-
-    }
-
     update() {
+        this.ctx.drawImage(this.playerImg, this.posX, this.posY, this.width, this.height)
+
         this.posY += this.velY
         this.velY += this.gravity
 
@@ -75,32 +66,33 @@ class Shit extends Player {
             if (this.cooldown >= 1) this.canJump = true
         }
 
-        if (this.keys.leftKeyPressed) this.moveLeft()
-        if (this.keys.rightKeyPressed) this.moveRight()
-        if (this.keys.upKeyPressed) this.jump()
-        if (this.keys.jumpPressed) this.jump()
+        if (this.keys.aKeyPressed) this.moveLeft()
+        if (this.keys.dKeyPressed) this.moveRight()
+        if (this.keys.wKeyPressed) this.jump()
+        if (this.keys.sKeyPressed) this.height = 30, this.width = 25
 
-        if (this.keys.downKeyPressed) this.moveDown()
+
 
 
     }
 
     setEventListeners() {
         document.addEventListener('keydown', ({ code }) => {
+            // Volver aquí si queréis varios movimientos a la vez
             switch (code) {
                 case 'KeyA':
-                    this.keys.leftKeyPressed = true
+                    this.keys.aKeyPressed = true
                     break;
                 case 'KeyD':
-                    this.keys.rightKeyPressed = true
+                    this.keys.dKeyPressed = true
                     break;
                 case 'KeyW':
-                    this.keys.upKeyPressed = true
+                    this.keys.wKeyPressed = true
                 case 'Space':
-                    this.keys.upKeyPressed = true
+                    this.keys.wKeyPressed = true
                     break;
                 case 'KeyS':
-                    this.height = 30, this.width = 25
+                    this.keys.sKeyPressed = true
                     break;
             }
         })
@@ -108,91 +100,22 @@ class Shit extends Player {
         document.addEventListener('keyup', ({ code }) => {
             switch (code) {
                 case 'KeyA':
-                    this.keys.leftKeyPressed = false
+                    this.keys.aKeyPressed = false
                     break;
                 case 'KeyD':
-                    this.keys.rightKeyPressed = false
+                    this.keys.dKeyPressed = false
                     break;
                 case 'KeyW':
-                    this.keys.upKeyPressed = false
+                    this.keys.wKeyPressed = false
                     break;
                 case 'Space':
-                    this.keys.upKeyPressed = false
+                    this.keys.wKeyPressed = false
                     break;
                 case 'KeyS':
+                    this.keys.sKeyPressed = false
                     this.width = 50, this.height = 60, this.posY -= 30
                     break;
             }
         })
     }
-
-}
-
-class Fart extends Player {
-    constructor(ctx, ctxWidth, ctxHeight, floor, cooldown, width, height, canJump, posY, velX, velY, keys, lives) {
-        super(ctx, ctxWidth, ctxHeight, floor, cooldown, width, height, canJump, posY, velX, velY, keys, lives)
-
-        this.posX = 200
-
-        this.gravity = 2
-
-        this.playerImg = new Image()
-        this.playerImg.src = "./assets/mrpedo.png";
-
-        this.init()
-
-    }
-
-    update() {
-        this.posY += this.velY
-        this.velY += this.gravity
-
-        if (this.posY + this.height + this.velY >= this.ctxHeight - this.floor) {
-            this.velY = 0
-            if (this.cooldown >= 1) this.canJump = true
-        }
-
-        if (this.keys.leftKeyPressed) this.moveLeft()
-        if (this.keys.rightKeyPressed) this.moveRight()
-        if (this.keys.upKeyPressed) this.jump()
-        if (this.keys.jumpPressed) this.jump()
-
-    }
-
-    setEventListeners() {
-        document.addEventListener('keydown', ({ code }) => {
-            switch (code) {
-                case 'ArrowLeft':
-                    this.keys.leftKeyPressed = true
-                    break;
-                case 'ArrowRight':
-                    this.keys.rightKeyPressed = true
-                    break;
-                case 'ArrowUp':
-                    this.keys.upKeyPressed = true
-                    break;
-                case 'ArrowDown':
-                    this.height = 30, this.width = 25
-                    break;
-            }
-        })
-
-        document.addEventListener('keyup', ({ code }) => {
-            switch (code) {
-                case 'ArrowLeft':
-                    this.keys.leftKeyPressed = false
-                    break;
-                case 'ArrowRight':
-                    this.keys.rightKeyPressed = false
-                    break;
-                case 'ArrowUp':
-                    this.keys.upKeyPressed = false
-                    break;
-                case 'ArrowDown':
-                    this.width = 50, this.height = 60, this.posY -= 30
-                    break;
-            }
-        })
-    }
-
 }

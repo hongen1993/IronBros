@@ -7,8 +7,8 @@ class Score {
         this.width = 120
         this.height = 150
 
-        this.posX = 120
-        this.posY = 50
+        this.posX = this.ctxWidth - 150
+        this.posY = 55
 
         this.score = 0
     }
