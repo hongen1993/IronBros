@@ -13,10 +13,6 @@ class Enemies {
         this.moveRight = false
     }
 
-    draw() {
-        this.ctx.drawImage(this.kleenexImg, this.posX, this.posY, this.width, this.height)
-    }
-
 }
 
 class Kleenex extends Enemies {
@@ -28,6 +24,10 @@ class Kleenex extends Enemies {
 
         this.kleenexImg = new Image()
         this.kleenexImg.src = "./assets/kleenex-b.png";
+    }
+
+    draw() {
+        this.ctx.drawImage(this.kleenexImg, this.posX, this.posY, this.width, this.height)
     }
 
     move() {
@@ -48,7 +48,7 @@ class Kleenex extends Enemies {
     }
 }
 
-class KleenexB extends Kleenex {
+class cillitBang extends Kleenex {
     constructor(ctx, ctxWidth, ctxHeight, floor, moveLeft, moveRight) {
         super(ctx, ctxWidth, ctxHeight, floor, moveLeft, moveRight)
 
@@ -58,14 +58,17 @@ class KleenexB extends Kleenex {
         this.posX = this.ctxWidth - 50
         this.posY = ctxHeight - this.floor - this.height
 
-        this.kleenexImg = new Image()
-        this.kleenexImg.src = "./assets/bang.png";
+        this.cillitBangImg = new Image()
+        this.cillitBangImg.src = "./assets/bang.png";
 
+    }
+
+    draw() {
+        this.ctx.drawImage(this.cillitBangImg, this.posX, this.posY, this.width, this.height)
     }
 
     move() {
         if (this.posX > 0 && this.moveLeft === true) {
-            console.log(this.posX)
             this.posX -= 2
         }
         if (this.posX === 0 || this.posX === 1) {

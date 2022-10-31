@@ -11,6 +11,8 @@ class Player {
         this.width = 50
         this.height = 60
 
+        this.lives = 3
+
         this.posX = 100
         this.posY = ctxHeight - this.floor - this.height
 
@@ -54,8 +56,8 @@ class Player {
 
 
 class Shit extends Player {
-    constructor(ctx, ctxWidth, ctxHeight, floor, cooldown, width, height, canJump, posX, posY, velX, velY, gravity, keys) {
-        super(ctx, ctxWidth, ctxHeight, floor, cooldown, width, height, canJump, posX, posY, velX, velY, gravity, keys)
+    constructor(ctx, ctxWidth, ctxHeight, floor, cooldown, width, height, canJump, posX, posY, velX, velY, gravity, keys, lives) {
+        super(ctx, ctxWidth, ctxHeight, floor, cooldown, width, height, canJump, posX, posY, velX, velY, gravity, keys, lives)
 
         this.playerImg = new Image()
         this.playerImg.src = "./assets/mrcaquita.png";
@@ -127,8 +129,8 @@ class Shit extends Player {
 }
 
 class Fart extends Player {
-    constructor(ctx, ctxWidth, ctxHeight, floor, cooldown, width, height, canJump, posY, velX, velY, keys) {
-        super(ctx, ctxWidth, ctxHeight, floor, cooldown, width, height, canJump, posY, velX, velY, keys)
+    constructor(ctx, ctxWidth, ctxHeight, floor, cooldown, width, height, canJump, posY, velX, velY, keys, lives) {
+        super(ctx, ctxWidth, ctxHeight, floor, cooldown, width, height, canJump, posY, velX, velY, keys, lives)
 
         this.posX = 200
 
