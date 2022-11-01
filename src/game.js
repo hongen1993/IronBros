@@ -45,25 +45,28 @@ const Game = {
 
     start() {
         this.generateAll()
+        this.generateCoins()
 
         this.intervalId = setInterval(() => {
             this.clearAll()
             this.drawAll()
+            this.drawCoins()
 
             this.checkCollisions(this.player, this.enemy)
-            this.checkCollisions(this.playerTwo, this.enemy)
+            // this.checkCollisions(this.playerTwo, this.enemy)
 
             this.checkPlatformColl(this.player, this.platform)
-            this.checkPlatformColl(this.playerTwo, this.platform)
+            // this.checkPlatformColl(this.playerTwo, this.platform)
 
+            this.coinColisions()
             // this.checkBoxColl(this.player, this.box)
 
             this.framesCounter++
             if (this.framesCounter % 35 === 0) this.player.cooldown++
-            if (this.framesCounter % 35 === 0) this.playerTwo.cooldown++
+            // if (this.framesCounter % 35 === 0) this.playerTwo.cooldown++
 
             if (this.framesCounter % 100 === 0) this.damageLives(this.player)
-            if (this.framesCounter % 100 === 0) this.damageLives(this.playerTwo)
+            // if (this.framesCounter % 100 === 0) this.damageLives(this.playerTwo)
 
             if (this.framesCounter % 60 === 0) this.score.score++
 
@@ -73,16 +76,14 @@ const Game = {
     drawAll() {
         this.background.draw()
         this.score.draw()
-        this.lifeA.draw()
-        this.lifeB.draw()
-        this.lifeC.draw()
-
+        this.drawLives()
 
         this.platform.draw()
         this.box.draw('yellow')
 
         this.player.update()
-        this.playerTwo.update()
+        this.playerMovement()
+        // this.playerTwo.update()
 
         this.enemy.move()
         this.enemyB.move()
@@ -95,21 +96,78 @@ const Game = {
         this.lifeB = new Heart(this.ctx, this.width, this.height, 75)
         this.lifeC = new Heart(this.ctx, this.width, this.height, 120)
 
+        this.player = new Player(this.ctx, this.width, this.height)
+
         this.platform = new Platform(this.ctx, this.width, this.height)
+        this.platformB = new Platform(this.ctx, this.width, this.height,)
+
         this.box = new Box(this.ctx, this.width, this.height)
 
 
-        this.player = new Player(this.ctx, this.width, this.height)
-        this.playerTwo = new PlayerTwo(this.ctx, this.width, this.height)
+        // this.playerTwo = new PlayerTwo(this.ctx, this.width, this.height)
 
         this.enemy = new Enemy(this.ctx, this.width, this.height)
         this.enemyB = new Enemy(this.ctx, this.width, this.height, 120, 100, 800, "./assets/bang.png")
     },
 
+    drawLives() {
+        switch (this.player.lives) {
+            case 3:
+                this.lifeA.draw()
+                this.lifeB.draw()
+                this.lifeC.draw()
+                break;
+            case 2:
+
+                this.lifeA.draw()
+                this.lifeB.draw()
+                break;
+            case 1:
+                this.lifeA.draw()
+                break;
+            case 0:
+                this.gameOver()
+                break;
+        }
+    },
+
+
+
+    // PLAYER 
+
     checkCollisions(player, enemy) {
         if (player.posX + player.width >= enemy.posX && player.posX < enemy.posX + enemy.width
             && player.posY + player.height + player.velY >= enemy.posY) player.damageReceived++;
     },
+
+    damageLives(player) {
+        if (player.damageReceived > 0 && player.damageReceived <= 90) {
+            if (!player.lives <= 0) {
+                player.lives--
+                player.damageReceived = 0
+            }
+        }
+    },
+
+    playerMovement() {
+
+        if (this.player.keys.dKeyPressed && this.player.posX < 850) {
+            console.log(this.platform.posX)
+            this.player.posX += 7
+        } else if (this.player.keys.aKeyPressed && this.player.posX > 100) {
+            console.log('Izquierda')
+            this.player.posX -= 7
+        } else {
+            this.player.velX = 0
+            if (this.player.keys.dKeyPressed) {
+                this.platform.posX -= 7
+            } else if (this.player.keys.aKeyPressed) {
+                this.platform.posX += 7
+            }
+
+        }
+    },
+    // PLATFORM 
 
     checkPlatformColl(player, platform) {
         if (player.posY + player.height <= platform.posY &&
@@ -123,6 +181,7 @@ const Game = {
     },
 
     // BOX
+
     // checkBoxColl(player, box) {
     //     if (player.posX + player.width >= box.posX && player.posX < box.posX + box.width &&
     //         player.posY > box.posY + box.height) {
@@ -146,15 +205,32 @@ const Game = {
     //     }
     // },
 
-    damageLives(player) {
-        if (player.damageReceived > 0 && player.damageReceived <= 90) {
-            if (player.lives <= 0) {
-                this.gameOver()
-            } else {
-                player.lives--
-                player.damageReceived = 0
-            }
-        }
+    // COINS 
+
+    generateCoins() {
+        this.coinA = new Coin(this.ctx, this.width, this.height)
+        this.coinB = new Coin(this.ctx, this.width, this.height, 450, 350)
+        this.coinC = new Coin(this.ctx, this.width, this.height, 550, 250)
+        this.coinD = new Coin(this.ctx, this.width, this.height, 600, 250)
+    },
+
+    drawCoins() {
+        this.coinA.draw()
+        this.coinB.draw()
+        this.coinC.draw()
+        this.coinD.draw()
+    },
+
+    checkCoinColl(player, coin) {
+        if (player.posX + player.width >= coin.posX && player.posX < coin.posX + coin.width
+            && player.posY + player.height + player.velY >= coin.posY && player.posY <= coin.posY + coin.height) coin.width = 0, coin.height = 0
+    },
+
+    coinColisions() {
+        this.checkCoinColl(this.player, this.coinA)
+        this.checkCoinColl(this.player, this.coinB)
+        this.checkCoinColl(this.player, this.coinC)
+        this.checkCoinColl(this.player, this.coinD)
     },
 
     clearAll() {
@@ -164,7 +240,9 @@ const Game = {
     gameOver() {
         clearInterval(this.intervalId)
         this.clearAll()
-        this.ctx.drawImage(this.defeatImg, 0, 0, this.width, this.height)
+        setTimeout(() => {
+            this.ctx.drawImage(this.defeatImg, 0, 0, this.width, this.height)
+        }, 1000)
         setTimeout(() => {
             location.reload()
         }, 5000)

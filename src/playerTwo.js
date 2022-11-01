@@ -4,7 +4,7 @@ class PlayerTwo {
         this.ctx = ctx
         this.ctxWidth = ctxWidth
         this.ctxHeight = ctxHeight
-        this.floor = 90
+        this.floor = 115
         this.cooldown = 1
 
         this.canJump = false

@@ -5,7 +5,7 @@ class Player {
         this.ctx = ctx
         this.ctxWidth = ctxWidth
         this.ctxHeight = ctxHeight
-        this.floor = 90
+        this.floor = 115
         this.cooldown = 1
 
         this.canJump = false
@@ -39,16 +39,20 @@ class Player {
         this.setEventListeners()
     }
 
-    moveLeft() {
-        if (this.posX > 100) this.posX -= 10
-    }
+    // moveLeft() {
+    //     if (this.posX > 100) this.posX -= 10
+    // }
 
-    moveRight() {
-        if (this.posX < 700) this.posX += 10
-    }
+    // moveRight() {
+    //     if (this.posX < 700) this.posX += 10
+    //     else {
+    //         console.log(this.platform.posX)
+    //     }
+    // }
 
     jump() {
         if (this.canJump) {
+            console.log(Platform(posX))
             this.velY -= 35
             this.canJump = false
             this.cooldown = 0
@@ -66,14 +70,10 @@ class Player {
             if (this.cooldown >= 1) this.canJump = true
         }
 
-        if (this.keys.aKeyPressed) this.moveLeft()
-        if (this.keys.dKeyPressed) this.moveRight()
+        // if (this.keys.aKeyPressed) this.moveLeft()
+        // if (this.keys.dKeyPressed) this.moveRight()
         if (this.keys.wKeyPressed) this.jump()
         if (this.keys.sKeyPressed) this.height = 30, this.width = 25
-
-
-
-
     }
 
     setEventListeners() {

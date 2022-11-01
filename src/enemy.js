@@ -4,7 +4,7 @@ class Enemy {
         this.ctxWidth = ctxWidth
         this.ctxHeight = ctxHeight
 
-        this.floor = 90
+        this.floor = 115
 
         this.width = width
         this.height = height

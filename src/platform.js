@@ -1,5 +1,5 @@
 class Platform {
-    constructor(ctx, ctxWidth, ctxHeight, width = 200, height = 45, posX = 300, posY = 500) {
+    constructor(ctx, ctxWidth, ctxHeight, width = 200, height = 45, posX = 300, posY = 700) {
         this.ctx = ctx
         this.ctxWidth = ctxWidth
         this.ctxHeight = ctxHeight
