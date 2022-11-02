@@ -1,21 +1,15 @@
 class Background {
-    constructor(ctx, width, height) {
+    constructor(ctx) {
         this.ctx = ctx
-        this.width = width
-        this.height = height
 
         this.backgroundImg = new Image()
-        this.backgroundImg.src = './assets/backgroundMario.png'
+        this.backgroundImg.src = './assets/background.jpg'
 
-        this.vel = 10
+        this.posX = 0
+        this.posY = -250
     }
 
     draw() {
-        this.ctx.drawImage(this.backgroundImg, 0, 0, this.width, this.height)
-    }
-
-    update() {
-        this.posX -= this.vel
-        if (this.posX < 0 - this.width) this.posX = 0
+        this.ctx.drawImage(this.backgroundImg, this.posX, this.posY)
     }
 }

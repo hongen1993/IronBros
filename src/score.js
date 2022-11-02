@@ -15,7 +15,7 @@ class Score {
 
     draw() {
         this.ctx.font = "25px Arial";
-        this.ctx.fillStyle = "#FFFFFF";
+        this.ctx.fillStyle = "black";
         this.ctx.fillText(`Score: ${this.score}`, this.posX, this.posY);
     }
 }

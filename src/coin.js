@@ -1,5 +1,5 @@
 class Coin {
-    constructor(ctx, ctxWidth, ctxHeight, posX = 375, posY = 350) {
+    constructor(ctx, ctxWidth, ctxHeight, posX, posY) {
         this.ctx = ctx
         this.ctxWidth = ctxWidth
         this.ctxHeight = ctxHeight

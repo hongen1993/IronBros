@@ -1,5 +1,5 @@
 class Heart {
-    constructor(ctx, ctxWidth, ctxHeight, posX = 30) {
+    constructor(ctx, ctxWidth, ctxHeight, posX) {
         this.ctx = ctx
         this.ctxWidth = ctxWidth
         this.ctxHeight = ctxHeight
