@@ -1,74 +1,71 @@
-/* moveLeft() {
-    if (this.posX > 100) this.posX -= 10
-}
-
-moveRight() {
-    if (this.posX < 700) this.posX += 10
-}
-
-if (this.keys.aKeyPressed) this.moveLeft() */
-
-
-
-
-/*
-if (this.player.keys.dKeyPressed && this.player.posX < 700) {
-    this.player.velX = 10
-} else if (this.player.keys.akeyPressed && this.player.posX > 100) {
-    this.player.velX = -10
-} else {
-    this.player.velX = 0
-    if (this.player.keys.dKeyPressed) {
-        this.platform.posX -= 10
-    } else if (this.player.keys.akeyPressed) {
-        this.platform.posX += 10
-    }
-
-} */
 
 // AFINAR LA COLISION CON LOS ENEMIGOS Y HACER SU MOVIMIENTO ESTATICO
 // REVISAR EL MOVIMIENTO PARA HACER LAS DIAGONALES ETC
-// MOVER EL FONDO MAL
-// MAS PLATAFORMAS, CREAR ARRAY PARA DARLE NUEVOS VALORES ETC
-// CREAR LOS VACIOS, ES OTRA FORMA DE COLISION
-// FORMA DE GANAR
-// PARALAJE mover el fondo mas lento que el jugador y el suelo, fondo mas lento quie el plano cercano, hay que darle profundidad creando otra capa más. Fondo neutro, capa con nubes o x cosas, jugador obstaculos etc
 // BUSCAR PRESETS
 // ANIMACION DE DAÑO Y PERSONAJE?
-// CREAR LA PLATAFORMA DEL SUELO
+// - COLISIONES CON LOS OBSTÁCULOS
+// ..................................
+// PRIORIDADES:
+
+// - DESPLAZAMIENTO CORRECTO DE LAS PLATAFORMAS Y DEL MAPA.
 
 
-//PLATAFORMAS
-
-/* this.platforms = [new Platform(this.ctx, this.width, this.height)] // this.platform = new Platform(this.ctx, this.width, this.height)
-this.platforms.forEach(platform => {  // this.platform.draw()
-    this.platform.draw()
-})
-
-if (this.player.keys.dKeyPressed && this.player.posX < 850) {
-    console.log(this.platform.posX)
-    this.player.posX += 7
-} else if (this.player.keys.aKeyPressed && this.player.posX > 100) {
-    console.log('Izquierda')
-    this.player.posX -= 7
-} else {
-    this.player.velX = 0
-    if (this.player.keys.dKeyPressed) {
-        this.platform.posX -= 7 // 
-    } else if (this.player.keys.aKeyPressed) {
-        this.platform.posX += 7
+/*  chekIntersection(r1, r2) {  // esto en game como colision
+    if (this.platform.posX > this.player.posX + this.player.width) {
+        return false
+    } else if (this.platform.posX + this.platform.width <= this.player.posX) {
+        return false
+    } else if (this.platform.posY >= this.player.posY + this.player.height) {
+        return false
+    } else if (this.platform.posY + this.platform.height <= this.player.posY) {
+        return false
+    } else {
+        return true
     }
+} 
+
+//horizontal col rectangulo //esto serian los valores de nuestras plataformas asiq ue no haria falta
+const horizontalRect = {
+    x: this.x + this.vel
+    y: this.y
+    width: this.width,
+    height: this.height
 
 }
- */
-/* 
-clearBullets() {
-    // this.player.bullets = this.player.bullets.filter(bullet => bullet.posX < this.width)
+// vertical colision rectangulo
+const verticalRect = {
+    x: this.x + this.velX
+    y: this.y
+    width: this.width,
+    height: this.height
+}
+
+//chequear intersecciones
+for (let i = 0; i < platforms.lenght; i++) { //esto busca en el array de plataformas
+let platformRect = {
+    x: platforms[i].x;
+    y: platforms[i].y;
+    width: platforms[i].width;
+    height : platforms[i].height;
+}
+
+if(checkIntersection(horizontalRect, platformRect)) {
+    while (checkIntersection(horizontalRect, platformRect)) {
+        horizontalRect.x -= Math.sign(this.velX)
+    } 
+    this.x = horizontalRect.x; // restringir el movimiento por unos pixels para que siempre se choque
+    this.velX = 0
 
 
-    this.player.bullets.forEach((bullet, i, bullets) => {
-        if (bullet.posX + bullet.width - 150 > this.boss.posX) {
-            bullets.splice(i, 1)
-        }
-    })
-}, */
+}
+
+if(checkIntersection(verticalRect, platformRect)) {
+    while (checkIntersection(verticalRect, platformRect)) {
+        verticalRect.y -= Math.sign(this.velY)
+    } 
+    this.y = verticalRect.y;
+    this.velY = 0
+}
+
+} */
+
