@@ -6,9 +6,6 @@ body {
     background-color: black;
 }
 
-.non-display {
-    display: none;
-}
 
 .hero {
     display: block;
@@ -18,6 +15,13 @@ body {
 .game-intro {
     height: 100vh;
     width: 100vw;
+    background-image: url(../assets/background/ironbros.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    display: flex;
+    align-items: self-end;
+    justify-content: center;
 }
 
 .logo-img {
@@ -27,15 +31,22 @@ body {
     width: 50%;
 }
 
-body button {
+.non-display {
+    display: none;
+}
+
+#start-button {
+    height: 75px;
+    width: 250px;
     font-size: 30px;
     background-color: #870007;
     color: #fff;
-    padding: 20px 40px;
+    padding: 10px 20px;
     border: 0;
     box-shadow: 0;
     border-radius: 5px;
-    margin-bottom: 20px;
+    margin-bottom: 225px;
+    justify-content: center;
 }
 
 canvas {

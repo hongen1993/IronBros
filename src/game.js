@@ -89,10 +89,6 @@ const Game = {
                 }
             }
 
-            if (this.framesCounter % 30 === 0) {
-                this.spaceship.animate();
-            }
-
             if (this.framesCounter % 15 === 0) {
                 this.enemies.forEach(enemy => {
                     enemy.animate();
