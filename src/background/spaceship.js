@@ -7,8 +7,8 @@ class Spaceship {
         this.width = 400
         this.height = 300
 
-        this.posX = 7100
-        this.posY = 260
+        this.posX = 6900
+        this.posY = 270
 
         this.victoryFlag = new Image
         this.victoryFlag.src = "./assets/background/victoryFlag.png"

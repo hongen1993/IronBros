@@ -579,7 +579,7 @@ const Game = {
         if (player.posX + player.width - 20 >= this.spaceship.posX && player.posX < this.spaceship.posX + this.spaceship.width) {
             setTimeout(() => {
                 this.winGame()
-            }, 1000)
+            }, 500)
         }
     },
 
