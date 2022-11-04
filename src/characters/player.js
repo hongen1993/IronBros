@@ -64,10 +64,6 @@ class Player {
         this.velY += this.gravity
 
         if (this.cooldown >= 1 && this.gun) this.canShoot = true
-        if (this.powerExtra) {
-            this.height = 120
-            this.width = 60
-        }
         if (this.keys.wKeyPressed) this.jump()
         if (this.keys.sKeyPressed) this.height = 30
         if (this.keys.dKeyPressed) {

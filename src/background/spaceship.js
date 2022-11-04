@@ -4,30 +4,32 @@ class Spaceship {
         this.ctxWidth = ctxWidth
         this.ctxHeight = ctxHeight
 
-        this.width = 200
+        this.width = 400
         this.height = 300
 
-        this.posX = 7200
-        this.posY = 300
+        this.posX = 7100
+        this.posY = 260
 
-        this.spaceShipImg = new Image
-        this.spaceShipImg.src = "./assets/background/spaceShip.png"
+        this.victoryFlag = new Image
+        this.victoryFlag.src = "./assets/background/victoryFlag.png"
 
         this.frames = 0
     }
 
     draw() {
-        this.ctx.drawImage(
-            this.spaceShipImg,
-            250 * this.frames,
-            0,
-            250,
-            156,
-            this.posX, this.posY, this.width, this.height)
+        this.ctx.drawImage(this.victoryFlag, this.posX, this.posY, this.width, this.height)
+
+        // this.ctx.drawImage(
+        //     this.spaceShipImg,
+        //     250 * this.frames,
+        //     0,
+        //     250,
+        //     156,
+        //     this.posX, this.posY, this.width, this.height)
     }
-    animate() {
-        this.frames++
-        if (this.frames >= 5)
-            this.frames = 0;
-    }
+    // animate() {
+    //     this.frames++
+    //     if (this.frames >= 5)
+    //         this.frames = 0;
+    // }
 }

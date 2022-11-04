@@ -427,7 +427,7 @@ const Game = {
     checkFall(player) {
         if (player.posY + player.height + player.velY >= this.height) {
             if (this.player.posY > this.height) {
-                // this.gameOver()
+                this.gameOver()
             }
             if (this.player.cooldown >= 1) this.canJump = true
         }
@@ -596,10 +596,9 @@ const Game = {
             }
         }
         if (player.posX + player.width >= this.shop.posX && player.posX < this.shop.posX + this.shop.width && player.keys.pKeyPressed) {
-            if (this.score.score >= 20) {
-                this.score.score -= 20
+            if (this.score.score >= 1) {
+                this.score.score -= 1
                 player.powerExtra = true
-                player.velY -= 15
             }
         }
     }
