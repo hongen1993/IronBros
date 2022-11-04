@@ -12,9 +12,8 @@ class Player {
         this.width = 50
         this.height = 100
 
-        this.damageReceived = 0 //hacer bien las colisiones, esto no haría falta
         this.inmune = false
-        this.lives = 300
+        this.lives = 3
 
         this.bullets = []
 
@@ -46,10 +45,6 @@ class Player {
         this.frames = 0
 
         this.setEventListeners()
-    }
-
-    animate() {
-
     }
 
     jump() {
@@ -123,10 +118,7 @@ class Player {
 
     setEventListeners() {
         document.addEventListener('keydown', ({ code }) => {
-            // Volver aquí si queréis varios movimientos a la vez
             switch (code) {
-                // VARIABLES SEGÚN LAS TECLAS DE CADA JUGADOR
-                // NECESITO ASOCIAR TECLAS ESPECÍFICAS PARA CADA JUGADOR --> valores que paso por el constructor
                 case 'KeyA':
                     this.keys.aKeyPressed = true
                     break;

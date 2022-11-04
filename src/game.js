@@ -23,6 +23,7 @@ const Game = {
     platforms: [],
     enemies: [],
     gun: undefined,
+    victoryFlag: undefined,
 
     player: undefined,
     playerTwo: undefined,
@@ -60,7 +61,8 @@ const Game = {
             this.clearAll()
             this.drawAll()
 
-            this.checkLavaColl(this.player)
+            this.victoryFlagColl(this.player)
+            this.checkFall(this.player)
             this.checkCollisions(this.player, this.enemies)
             this.checkBulletsColl(this.player)
             this.checkPlatformColl(this.player)
@@ -71,15 +73,15 @@ const Game = {
             if (this.framesCounter % 35 === 0) this.player.cooldown++
             // if (this.framesCounter % 35 === 0) this.playerTwo.cooldown++
 
-            if (this.framesCounter % 60 === 0) this.damageLives(this.player)
-            // if (this.framesCounter % 100 === 0) this.damageLives(this.playerTwo)
-
             if (this.player.gun) {
-                if (this.framesCounter % 630 === 0) {
-                    this.boss.meteors.push(new Meteor(this.ctx, this.boss.posX, this.boss.posY, this.boss.height, -10, this.boss.posY + this.boss.height - 250))
+                if (this.framesCounter % 580 === 0) {
+                    this.boss.meteors.push(new Meteor(this.ctx, this.boss.posX, this.boss.posY, this.boss.height, -13, this.boss.posY + this.boss.height - 260))
                 }
-                if (this.framesCounter % 170 === 0) {
-                    this.boss.meteors.push(new Meteor(this.ctx, this.boss.posX, this.boss.posY, this.boss.height, -10, this.boss.posY + this.boss.height - 325))
+                if (this.framesCounter % 190 === 0) {
+                    this.boss.meteors.push(new Meteor(this.ctx, this.boss.posX, this.boss.posY, this.boss.height, -9, this.boss.posY + this.boss.height - 340))
+                }
+                if (this.framesCounter % 410 === 0) {
+                    this.boss.meteors.push(new Meteor(this.ctx, this.boss.posX, this.boss.posY, this.boss.height, -12, this.boss.posY + this.boss.height - 420))
                 }
             }
 
@@ -111,6 +113,7 @@ const Game = {
         this.generateCoins()
         this.generateLives()
 
+        this.victoryFlag = new VictoryFlag(this.ctx, this.width, this.height)
         this.gun = new Gun(this.ctx, this.width, this.height)
         this.player = new Player(this.ctx, this.width, this.height)
         this.boss = new Boss(this.ctx, this.width, this.height)
@@ -127,6 +130,7 @@ const Game = {
         this.player.bullets.forEach(bullet => bullet.draw())
         this.boss.meteors.forEach(meteor => meteor.update())
 
+        this.victoryFlag.draw()
         this.boss.draw()
         this.player.update()
         this.enemiesMovements(this.platforms)
@@ -167,30 +171,18 @@ const Game = {
     gameOver() {
         clearInterval(this.intervalId)
         this.clearAll()
-        this.ctx.drawImage(this.winImg, 0, 0, this.width, this.height)
+        this.ctx.drawImage(this.defeatImg, 0, 0, this.width, this.height)
         setTimeout(() => {
             location.reload()
         }, 5000)
     },
-
-    setEventListener() {
-        document.addEventListener('keydown', ({ code }) => {
-            switch (code) {
-                case 'KeyR':
-                    this.reload()
-                    break;
-            }
-        })
-    },
-
-    // PLAYER 
 
     generateLives() {
         this.lives.push(
             new Heart(this.ctx, this.width, this.height, 30, 30),
             new Heart(this.ctx, this.width, this.height, 75, 30),
             new Heart(this.ctx, this.width, this.height, 120, 30),
-            new Heart(this.ctx, this.width, this.height, 2100, 50),
+            new Heart(this.ctx, this.width, this.height, 2000, 50),
             new Heart(this.ctx, this.width, this.height, 2375, 50)
         )
     },
@@ -303,16 +295,6 @@ const Game = {
         }
     },
 
-    damageLives(player) {
-        if (player.damageReceived > 0 && player.damageReceived <= 90) {
-            if (!player.lives <= 0) {
-                player.lives--
-                player.posY -= 200
-                player.damageReceived = 0
-            }
-        }
-    },
-
     checkGunColl(player) {
         if (player.posX + player.width >= this.gun.posX && player.posX < this.gun.posX + this.gun.width
             && player.posY + player.height + player.velY >= this.gun.posY && player.posY <= this.gun.posY + this.gun.height) {
@@ -320,6 +302,10 @@ const Game = {
             this.gun.height = 0
             this.gun.posY = 0
             player.gun = true
+            if (player.gun) {
+                this.platforms[12].posY += 200
+                this.platforms[11].posY += 200
+            }
         }
     },
 
@@ -332,6 +318,7 @@ const Game = {
             this.enemies.forEach(enemy => enemy.posX -= 5)
             this.boss.posX -= 5
             this.gun.posX -= 5
+            this.victoryFlag.posX -= 5
             if (this.framesCounter % 5 === 0) player.animate()
             if (!this.lifeEatA) {
                 this.lives[3].posX -= 5
@@ -349,6 +336,7 @@ const Game = {
                 this.enemies.forEach(enemy => enemy.posX += 5)
                 this.boss.posX += 5
                 this.gun.posX += 5
+                this.victoryFlag.posX += 5
                 if (this.framesCounter % 5 === 0) player.animate()
                 if (!this.lifeEatA) {
                     this.lives[3].posX += 5
@@ -359,6 +347,7 @@ const Game = {
             }
         }
     },
+
     checkPlatformColl(player) {
         this.platforms.forEach(platform => {
             if (player.posY + player.height <= platform.posY &&
@@ -402,9 +391,10 @@ const Game = {
             new Platform(this.ctx, this.posX, this.posY, 3450, 725, 800, 250),
             new Platform(this.ctx, this.posX, this.posY, 4350, 650, 150, 35),
             new Platform(this.ctx, this.posX, this.posY, 4650, 600, 150, 35),
-            new Platform(this.ctx, this.posX, this.posY, 4900, 550, 750, 500),
-            new Platform(this.ctx, this.posX, this.posY, 6000, 550, 1500, 500),
-            new Platform(this.ctx, this.posX, this.posY, 6100, 750, 100, 30),
+            new Platform(this.ctx, this.posX, this.posY, 4900, 550, 750, 300),
+            new Platform(this.ctx, this.posX, this.posY, 6000, 550, 1500, 300),
+            new Platform(this.ctx, this.posX, this.posY, 5725, 900, 200, 50),
+            new Platform(this.ctx, this.posX, this.posY, 5225, 400, 100, 35),
 
             //--------------------------------------------------------------//
 
@@ -419,14 +409,14 @@ const Game = {
             new Platform(this.ctx, this.posX, this.posY, 2475, 140, 75, 35),
 
             new Platform(this.ctx, this.posX, this.posY, 2700, 250, 1000, 70),
-            new Platform(this.ctx, this.posX, this.posY, 3200, 40, 625, 170),
-            new Platform(this.ctx, this.posX, this.posY, 3800, 40, 170, 390),
+            new Platform(this.ctx, this.posX, this.posY, 3900, 110, 1000, 90),
+            new Platform(this.ctx, this.posX, this.posY, 3825, 110, 170, 320),
             new Platform(this.ctx, this.posX, this.posY, 3450, 360, 375, 70),
 
         )
     },
 
-    checkLavaColl(player) {
+    checkFall(player) {
         if (player.posY + player.height + player.velY >= this.height) {
             if (this.player.posY > this.height) {
                 this.gameOver()
@@ -460,7 +450,7 @@ const Game = {
             new Coin(this.ctx, this.width, this.height, 3925, 660),
             new Coin(this.ctx, this.width, this.height, 4125, 660),
 
-            new Coin(this.ctx, this.width, this.height, 4410, 560),
+            new Coin(this.ctx, this.width, this.height, 4405, 580),
             new Coin(this.ctx, this.width, this.height, 4710, 530),
 
             //---------------------------------------------------//
@@ -478,12 +468,21 @@ const Game = {
             new Coin(this.ctx, this.width, this.height, 3055, 190),
             new Coin(this.ctx, this.width, this.height, 3120, 190),
 
-            new Coin(this.ctx, this.width, this.height, 3705, 215),
-            new Coin(this.ctx, this.width, this.height, 3755, 215),
-            new Coin(this.ctx, this.width, this.height, 3705, 265),
-            new Coin(this.ctx, this.width, this.height, 3755, 265),
-            new Coin(this.ctx, this.width, this.height, 3700, 315),
-            new Coin(this.ctx, this.width, this.height, 3755, 315),
+            new Coin(this.ctx, this.width, this.height, 3185, 190),
+            new Coin(this.ctx, this.width, this.height, 3250, 190),
+            new Coin(this.ctx, this.width, this.height, 3315, 190),
+            new Coin(this.ctx, this.width, this.height, 3380, 190),
+            new Coin(this.ctx, this.width, this.height, 3445, 190),
+            new Coin(this.ctx, this.width, this.height, 3510, 190),
+            new Coin(this.ctx, this.width, this.height, 3575, 190),
+            new Coin(this.ctx, this.width, this.height, 3640, 190),
+
+            new Coin(this.ctx, this.width, this.height, 3710, 190),
+            new Coin(this.ctx, this.width, this.height, 3770, 190),
+            new Coin(this.ctx, this.width, this.height, 3710, 250),
+            new Coin(this.ctx, this.width, this.height, 3770, 250),
+            new Coin(this.ctx, this.width, this.height, 3710, 310),
+            new Coin(this.ctx, this.width, this.height, 3770, 310),
         )
     },
 
@@ -503,7 +502,8 @@ const Game = {
             new Enemy(this.ctx, this.width, this.height, 2100, 530, 100, 125, 1, "./assets/characters/skeletonA.png", "./assets/characters/skeletonB.png"),
             new Enemy(this.ctx, this.width, this.height, 1500, 30, 120, 100, 2, "./assets/characters/birdA.png", "./assets/characters/birdB.png"),
             new Enemy(this.ctx, this.width, this.height, 3600, 150, 120, 100, 1.5, "./assets/characters/birdA.png", "./assets/characters/birdB.png"),
-            new Enemy(this.ctx, this.width, this.height, -400, 255, 120, 100, 2, "./assets/characters/birdA.png", "./assets/characters/birdB.png"),
+            new Enemy(this.ctx, this.width, this.height, -10, 255, 120, 100, 2, "./assets/characters/birdA.png", "./assets/characters/birdB.png"),
+            new Enemy(this.ctx, this.width, this.height, -490, 360, 120, 100, 5, "./assets/characters/birdA.png", "./assets/characters/birdB.png"),
         )
     },
 
@@ -512,7 +512,8 @@ const Game = {
             this.enemies[1].movement(platforms[5].posX, platforms[5].posX + platforms[5].width - 100),
             this.enemies[2].movement(platforms[0].posX - 500, platforms[9].posX - 300),
             this.enemies[3].movement(platforms[0].posX - 500, platforms[9].posX - 300),
-            this.enemies[4].movement(platforms[0].posX - 500, platforms[9].posX - 300)
+            this.enemies[4].movement(platforms[0].posX - 500, platforms[9].posX - 300),
+            this.enemies[5].movement(platforms[0].posX - 500, platforms[9].posX - 300)
     },
 
     checkCollisions(player) {
@@ -535,7 +536,10 @@ const Game = {
             if (bullet.posX + bullet.width + bullet.velX >= this.boss.posX
                 && bullet.posX + bullet.width <= this.boss.posX) {
                 this.boss.lives--
-                if (this.boss.lives <= 0) this.winGame()
+                if (this.boss.lives <= 0) {
+                    this.boss.posY = 1500
+                    this.platforms[15].posY = 525
+                }
             }
         })
 
@@ -550,6 +554,14 @@ const Game = {
                 }
             }
         })
+    },
+
+    victoryFlagColl(player) {
+        if (player.posX + player.width >= this.victoryFlag.posX && player.posX < this.victoryFlag.posX + this.victoryFlag.width
+            && player.posY + player.height + player.velY >= this.victoryFlag.posY && player.posY <= this.victoryFlag.posY + this.victoryFlag.height) {
+            setTimeout(() => {
+                this.winGame()
+            }, 3000)
+        }
     }
 }
-

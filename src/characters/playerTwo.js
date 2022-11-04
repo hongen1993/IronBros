@@ -1,6 +1,5 @@
 class PlayerTwo {
     constructor(ctx, ctxWidth, ctxHeight) {
-        // 
         this.ctx = ctx
         this.ctxWidth = ctxWidth
         this.ctxHeight = ctxHeight
@@ -12,7 +11,6 @@ class PlayerTwo {
         this.width = 50
         this.height = 60
 
-        this.damageReceived = 0 //hacer bien las colisiones, esto no haría falta
         this.lives = 300
 
         this.posX = 100

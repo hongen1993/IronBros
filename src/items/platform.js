@@ -16,8 +16,6 @@ class Platform {
 
     draw() {
         this.ctx.drawImage(this.platformImg, this.posX, this.posY, this.width, this.height)
-        // this.ctx.fillStyle = '#492A15'
-        // this.ctx.fillRect(this.posX, this.posY, this.width, this.height)
     }
 }
 
