@@ -8,6 +8,7 @@ class Player {
         this.canJump = false
         this.canShoot = false
         this.gun = false
+        this.powerExtra = false
 
         this.width = 50
         this.height = 100
@@ -34,6 +35,9 @@ class Player {
             dKeyPressed: false,
             wKeyPressed: false,
             sKeyPressed: false,
+            lKeyPressed: false,
+            pKeyPressed: false,
+
         }
 
         this.playerImgA = new Image()
@@ -60,7 +64,10 @@ class Player {
         this.velY += this.gravity
 
         if (this.cooldown >= 1 && this.gun) this.canShoot = true
-
+        if (this.powerExtra) {
+            this.height = 120
+            this.width = 60
+        }
         if (this.keys.wKeyPressed) this.jump()
         if (this.keys.sKeyPressed) this.height = 30
         if (this.keys.dKeyPressed) {
@@ -136,7 +143,12 @@ class Player {
                 case 'KeyE':
                     this.shoot()
                     break;
-
+                case 'KeyL':
+                    this.keys.lKeyPressed = true
+                    break;
+                case 'KeyP':
+                    this.keys.pKeyPressed = true
+                    break;
             }
         })
 
@@ -156,7 +168,14 @@ class Player {
                     break;
                 case 'KeyS':
                     this.keys.sKeyPressed = false
-                    this.height = 100, this.posY -= 100
+                    if (this.powerExtra) this.height = 130, this.posY -= 120
+                    else this.height = 100, this.posY -= 100
+                    break;
+                case 'KeyL':
+                    this.keys.lKeyPressed = false
+                    break;
+                case 'KeyP':
+                    this.keys.pKeyPressed = false
                     break;
             }
         })
