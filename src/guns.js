@@ -7,11 +7,11 @@ class Gun {
         this.width = 100
         this.height = 100
 
-        this.posX = 5000
-        this.posY = 500
+        this.posX = 5500
+        this.posY = 450
 
         this.gunImg = new Image
-        this.gunImg.src = "./assets/gun.png"
+        this.gunImg.src = "./assets/items/gun.png"
     }
 
     draw() {

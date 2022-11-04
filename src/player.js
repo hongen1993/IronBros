@@ -10,15 +10,21 @@ class Player {
         this.gun = false
 
         this.width = 50
-        this.height = 60
+        this.height = 100
 
         this.damageReceived = 0 //hacer bien las colisiones, esto no haría falta
-        this.lives = 3
+        this.inmune = false
+        this.lives = 300
 
         this.bullets = []
 
         this.posX = posX
         this.posY = posY
+
+        this.canMoveLeft = true
+        this.canMoveRight = true
+        this.moveLeft = false
+        this.moveRight = true
 
         this.velX = 0
         this.velY = 0
@@ -31,36 +37,72 @@ class Player {
             sKeyPressed: false,
         }
 
-        //this.playerImg = new Image()
-        //this.playerImg.src = playerImg
+        this.playerImgA = new Image()
+        this.playerImgA.src = "./assets/characters/playerA.png"
+
+        this.playerImgB = new Image()
+        this.playerImgB.src = "./assets/characters/playerB.png"
+
+        this.frames = 0
 
         this.setEventListeners()
     }
 
+    animate() {
+
+    }
+
     jump() {
         if (this.canJump) {
-            this.velY -= 35
+            this.velY -= 32
             this.canJump = false
             this.cooldown = 0
         }
     }
 
     update() {
-        // this.ctx.drawImage(this.playerImg, this.posX, this.posY, this.width, this.height)
-        // this.posX += this.velX
         this.posY += this.velY
         this.velY += this.gravity
 
         if (this.cooldown >= 1 && this.gun) this.canShoot = true
 
         if (this.keys.wKeyPressed) this.jump()
-        if (this.keys.sKeyPressed) this.height = 30, this.width = 25
+        if (this.keys.sKeyPressed) this.height = 30
+        if (this.keys.dKeyPressed) {
+            this.moveRight = true
+            this.moveLeft = false
+        }
+        if (this.keys.aKeyPressed) {
+            this.moveLeft = true
+            this.moveRight = false
+        }
     }
 
     draw() {
-        this.ctx.fillStyle = 'red'
-        this.ctx.fillRect(this.posX, this.posY, this.width, this.height)
+        if (this.moveRight) {
+            this.ctx.drawImage(
+                this.playerImgB,
+                149 * this.frames,
+                0,
+                149,
+                170,
+                this.posX, this.posY, this.width, this.height)
+        }
+        if (this.moveLeft) {
+            this.ctx.drawImage(
+                this.playerImgA,
+                149 * this.frames,
+                0,
+                149,
+                170,
+                this.posX, this.posY, this.width, this.height)
+        }
+    }
 
+    animate() {
+        this.frames++
+        if (this.frames >= 6)
+            this.frames = 0;
     }
 
     shoot() {
@@ -68,6 +110,14 @@ class Player {
             this.bullets.push(new Bullet(this.ctx, this.posX, this.posY, this.height, this.width))
             this.canShoot = false
             this.cooldown = 0
+        }
+    }
+
+    invincible() {
+        if (this.inmune) {
+            setTimeout(() => {
+                this.inmune = false
+            }, 3000)
         }
     }
 
@@ -94,6 +144,7 @@ class Player {
                 case 'KeyE':
                     this.shoot()
                     break;
+
             }
         })
 
@@ -113,7 +164,7 @@ class Player {
                     break;
                 case 'KeyS':
                     this.keys.sKeyPressed = false
-                    this.width = 50, this.height = 60, this.posY -= 30
+                    this.height = 100, this.posY -= 100
                     break;
             }
         })

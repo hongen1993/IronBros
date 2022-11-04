@@ -1,5 +1,5 @@
 class Platform {
-    constructor(ctx, ctxWidth, ctxHeight, posX, posY, width, height, platformImg) {
+    constructor(ctx, ctxWidth, ctxHeight, posX, posY, width, height) {
         this.ctx = ctx
         this.ctxWidth = ctxWidth
         this.ctxHeight = ctxHeight
@@ -10,14 +10,14 @@ class Platform {
         this.width = width
         this.height = height
 
-        // this.platformImg = new Image
-        // this.platformImg.src = platformImg
+        this.platformImg = new Image
+        this.platformImg.src = './assets/background/ground.png'
     }
 
     draw() {
-        // this.ctx.drawImage(this.platformImg, this.posX, this.posY, this.width, this.height)
-        this.ctx.fillStyle = '#492A15'
-        this.ctx.fillRect(this.posX, this.posY, this.width, this.height)
+        this.ctx.drawImage(this.platformImg, this.posX, this.posY, this.width, this.height)
+        // this.ctx.fillStyle = '#492A15'
+        // this.ctx.fillRect(this.posX, this.posY, this.width, this.height)
     }
 }
 

@@ -10,7 +10,7 @@ class Bullet {
         this.velX = 20
 
         this.bulletImg = new Image()
-        this.bulletImg.src = './assets/bullet.png'
+        this.bulletImg.src = './assets/items/bullet.png'
     }
 
     draw() {

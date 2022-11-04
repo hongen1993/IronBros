@@ -22,7 +22,7 @@
     } else {
         return true
     }
-} 
+}
 
 //horizontal col rectangulo //esto serian los valores de nuestras plataformas asiq ue no haria falta
 const horizontalRect = {
@@ -52,7 +52,7 @@ let platformRect = {
 if(checkIntersection(horizontalRect, platformRect)) {
     while (checkIntersection(horizontalRect, platformRect)) {
         horizontalRect.x -= Math.sign(this.velX)
-    } 
+    }
     this.x = horizontalRect.x; // restringir el movimiento por unos pixels para que siempre se choque
     this.velX = 0
 
@@ -62,10 +62,13 @@ if(checkIntersection(horizontalRect, platformRect)) {
 if(checkIntersection(verticalRect, platformRect)) {
     while (checkIntersection(verticalRect, platformRect)) {
         verticalRect.y -= Math.sign(this.velY)
-    } 
+    }
     this.y = verticalRect.y;
     this.velY = 0
 }
 
 } */
+
+
+//
 

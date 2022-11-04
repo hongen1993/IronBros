@@ -1,5 +1,5 @@
 class Heart {
-    constructor(ctx, ctxWidth, ctxHeight, posX) {
+    constructor(ctx, ctxWidth, ctxHeight, posX, posY) {
         this.ctx = ctx
         this.ctxWidth = ctxWidth
         this.ctxHeight = ctxHeight
@@ -8,10 +8,10 @@ class Heart {
         this.height = 40
 
         this.posX = posX
-        this.posY = 30
+        this.posY = posY
 
         this.livesImg = new Image
-        this.livesImg.src = "./assets/heart.png"
+        this.livesImg.src = "./assets/items/heart.png"
     }
 
     draw() {

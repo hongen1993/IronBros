@@ -3,9 +3,9 @@ class Background {
         this.ctx = ctx
 
         this.backgroundImg = new Image()
-        this.backgroundImg.src = './assets/background.jpg'
+        this.backgroundImg.src = './assets/background/background.jpg'
 
-        this.posX = 0
+        this.posX = -200
         this.posY = -250
     }
 

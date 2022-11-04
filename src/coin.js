@@ -11,10 +11,10 @@ class Coin {
         this.posY = posY
 
         this.coinsImg = new Image
-        this.coinsImg.src = "./assets/coin.png"
+        this.coinsImg.src = "./assets/items/coin.png"
     }
-
     draw() {
         this.ctx.drawImage(this.coinsImg, this.posX, this.posY, this.width, this.height)
+
     }
 }

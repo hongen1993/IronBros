@@ -19,11 +19,34 @@ class Enemy {
 
         this.enemyImgB = new Image()
         this.enemyImgB.src = enemyImgB
+
+        this.frames = 0
     }
 
     draw() {
-        if (this.moveLeft === true) this.ctx.drawImage(this.enemyImgA, this.posX, this.posY, this.width, this.height)
-        else this.ctx.drawImage(this.enemyImgB, this.posX, this.posY, this.width, this.height)
+        if (this.moveLeft) {
+            this.ctx.drawImage(
+                this.enemyImgA,
+                100 * this.frames,
+                0,
+                100,
+                109,
+                this.posX, this.posY, this.width, this.height)
+        } else {
+            this.ctx.drawImage(
+                this.enemyImgB,
+                100 * this.frames,
+                0,
+                100,
+                109,
+                this.posX, this.posY, this.width, this.height)
+        }
+    }
+
+    animate() {
+        this.frames++
+        if (this.frames >= 3)
+            this.frames = 0;
     }
 
     movement(positionA, positionB) {
