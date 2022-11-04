@@ -1,6 +1,6 @@
 const Game = {
     name: 'Platform Game',
-    author: 'Daniel - Tito - Hongen',
+    author: 'Daniel - Hongen',
     version: '1.0.0',
     description: 'Super Mario Bros was inspired by our game',
 
@@ -79,7 +79,7 @@ const Game = {
                 }
 
                 if (this.framesCounter % 580 === 0) {
-                    this.boss.meteors.push(new Meteor(this.ctx, this.boss.posX, this.boss.posY, this.boss.height, -13, this.boss.posY + this.boss.height - 260))
+                    this.boss.meteors.push(new Meteor(this.ctx, this.boss.posX, this.boss.posY, this.boss.height, -13, this.boss.posY + this.boss.height - 250))
                 }
                 if (this.framesCounter % 190 === 0) {
                     this.boss.meteors.push(new Meteor(this.ctx, this.boss.posX, this.boss.posY, this.boss.height, -9, this.boss.posY + this.boss.height - 340))
@@ -180,7 +180,7 @@ const Game = {
         this.ctx.drawImage(this.defeatImg, 0, 0, this.width, this.height)
         setTimeout(() => {
             location.reload()
-        }, 5000)
+        }, 2000)
     },
 
     generateLives() {
@@ -579,7 +579,7 @@ const Game = {
         if (player.posX + player.width - 20 >= this.spaceship.posX && player.posX < this.spaceship.posX + this.spaceship.width) {
             setTimeout(() => {
                 this.winGame()
-            }, 3000)
+            }, 1000)
         }
     },
 
