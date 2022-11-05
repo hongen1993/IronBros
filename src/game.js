@@ -592,8 +592,8 @@ const Game = {
             }
         }
         if (player.posX + player.width >= this.shop.posX && player.posX < this.shop.posX + this.shop.width && player.keys.pKeyPressed) {
-            if (this.score.score >= 1) {
-                this.score.score -= 1
+            if (this.score.score >= 20) {
+                this.score.score -= 20
                 player.powerExtra = true
             }
         }
