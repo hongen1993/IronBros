@@ -595,6 +595,7 @@ const Game = {
             if (this.score.score >= 20) {
                 this.score.score -= 20
                 player.powerExtra = true
+                player.velY = -10
             }
         }
     }

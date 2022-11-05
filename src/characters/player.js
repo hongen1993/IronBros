@@ -10,7 +10,7 @@ class Player {
         this.gun = false
         this.powerExtra = false
 
-        this.width = 50
+        this.width = 75
         this.height = 100
 
         this.inmune = false
@@ -26,6 +26,7 @@ class Player {
         this.moveLeft = false
         this.moveRight = true
 
+        this.superJump = 32
         this.velX = 0
         this.velY = 0
         this.gravity = gravity
@@ -37,7 +38,6 @@ class Player {
             sKeyPressed: false,
             lKeyPressed: false,
             pKeyPressed: false,
-
         }
 
         this.playerImgA = new Image()
@@ -46,6 +46,13 @@ class Player {
         this.playerImgB = new Image()
         this.playerImgB.src = "./assets/characters/playerB.png"
 
+
+        this.superPlayerImgA = new Image()
+        this.superPlayerImgA.src = "./assets/characters/superPlayerA.png"
+
+        this.superPlayerImgB = new Image()
+        this.superPlayerImgB.src = "./assets/characters/superPlayerB.png"
+
         this.frames = 0
 
         this.setEventListeners()
@@ -53,7 +60,7 @@ class Player {
 
     jump() {
         if (this.canJump) {
-            this.velY -= 32
+            this.velY -= this.superJump
             this.canJump = false
             this.cooldown = 0
         }
@@ -62,10 +69,14 @@ class Player {
     update() {
         this.posY += this.velY
         this.velY += this.gravity
+        if (this.powerExtra) this.height = 130, this.width = 105, this.superJump = 35
 
         if (this.cooldown >= 1 && this.gun) this.canShoot = true
         if (this.keys.wKeyPressed) this.jump()
-        if (this.keys.sKeyPressed) this.height = 30
+        if (this.keys.sKeyPressed) {
+            this.height = 30
+            if (this.powerExtra) { this.height = 60 }
+        }
         if (this.keys.dKeyPressed) {
             this.moveRight = true
             this.moveLeft = false
@@ -78,22 +89,42 @@ class Player {
 
     draw() {
         if (this.moveRight) {
-            this.ctx.drawImage(
-                this.playerImgB,
-                149 * this.frames,
-                0,
-                149,
-                170,
-                this.posX, this.posY, this.width, this.height)
+            if (this.powerExtra) {
+                this.ctx.drawImage(
+                    this.superPlayerImgB,
+                    149 * this.frames,
+                    0,
+                    149,
+                    170,
+                    this.posX, this.posY, this.width, this.height)
+            } else {
+                this.ctx.drawImage(
+                    this.playerImgB,
+                    149 * this.frames,
+                    0,
+                    149,
+                    170,
+                    this.posX, this.posY, this.width, this.height)
+            }
         }
         if (this.moveLeft) {
-            this.ctx.drawImage(
-                this.playerImgA,
-                149 * this.frames,
-                0,
-                149,
-                170,
-                this.posX, this.posY, this.width, this.height)
+            if (this.powerExtra) {
+                this.ctx.drawImage(
+                    this.superPlayerImgA,
+                    149 * this.frames,
+                    0,
+                    149,
+                    170,
+                    this.posX, this.posY, this.width, this.height)
+            } else {
+                this.ctx.drawImage(
+                    this.playerImgA,
+                    149 * this.frames,
+                    0,
+                    149,
+                    170,
+                    this.posX, this.posY, this.width, this.height)
+            }
         }
     }
 
@@ -145,6 +176,18 @@ class Player {
                 case 'KeyP':
                     this.keys.pKeyPressed = true
                     break;
+                case 'ArrowLeft':
+                    this.keys.aKeyPressed = true
+                    break;
+                case 'ArrowRight':
+                    this.keys.dKeyPressed = true
+                    break;
+                case 'ArrowUp':
+                    this.keys.wKeyPressed = true
+                    break;
+                case 'ArrowDown':
+                    this.keys.sKeyPressed = true
+                    break;
             }
         })
 
@@ -172,6 +215,20 @@ class Player {
                     break;
                 case 'KeyP':
                     this.keys.pKeyPressed = false
+                    break;
+                case 'ArrowLeft':
+                    this.keys.aKeyPressed = false
+                    break;
+                case 'ArrowRight':
+                    this.keys.dKeyPressed = false
+                    break;
+                case 'ArrowUp':
+                    this.keys.wKeyPressed = false
+                    break;
+                case 'ArrowDown':
+                    this.keys.sKeyPressed = false
+                    if (this.powerExtra) this.height = 130, this.posY -= 120
+                    else this.height = 100, this.posY -= 100
                     break;
             }
         })

@@ -4,20 +4,20 @@ class Spaceship {
         this.ctxWidth = ctxWidth
         this.ctxHeight = ctxHeight
 
-        this.width = 400
-        this.height = 300
+        this.width = 600
+        this.height = 600
 
         this.posX = 6900
-        this.posY = 270
+        this.posY = 0
 
-        this.victoryFlag = new Image
-        this.victoryFlag.src = "./assets/background/victoryFlag.png"
+        this.castle = new Image
+        this.castle.src = "./assets/background/castle.png"
 
         this.frames = 0
     }
 
     draw() {
-        this.ctx.drawImage(this.victoryFlag, this.posX, this.posY, this.width, this.height)
+        this.ctx.drawImage(this.castle, this.posX, this.posY, this.width, this.height)
 
         // this.ctx.drawImage(
         //     this.spaceShipImg,
