@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
 body {
     padding: 0;
     margin: 0;
@@ -35,12 +37,22 @@ body {
     display: none;
 }
 
+canvas {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
 #start-button {
-    height: 75px;
-    width: 250px;
-    font-size: 30px;
-    background-color: #870007;
-    color: #fff;
+    height: 60px;
+    width: 200px;
+    font-size: 27px;
+    font-family: 'Anton', sans-serif;
+    letter-spacing: 4px;
+    background-color: transparent;
     padding: 10px 20px;
     border: 0;
     box-shadow: 0;
@@ -49,10 +61,45 @@ body {
     justify-content: center;
 }
 
-canvas {
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+
+#start-button {
+    color: #FFF;
+    transition: all 0.5s;
+    position: relative;
+}
+
+#start-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s;
+}
+
+#start-button:hover::before {
+    opacity: 0;
+    transform: scale(0.5, 0.5);
+}
+
+#start-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0;
+    transition: all 0.3s;
+    border: 2px inset rgba(255, 255, 255, 0.5);
+    transform: scale(1.2, 1.2);
+}
+
+#start-button:hover::after {
+    opacity: 1;
+    transform: scale(1, 1);
 }

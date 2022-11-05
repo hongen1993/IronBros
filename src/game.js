@@ -8,8 +8,8 @@ const Game = {
 
     canvas: undefined,
     ctx: undefined,
-    width: 1024,
-    height: 576,
+    width: undefined,
+    height: undefined,
 
     background: undefined,
     canStart: true,
