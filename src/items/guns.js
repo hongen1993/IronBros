@@ -7,7 +7,7 @@ class Gun {
         this.width = 100
         this.height = 100
 
-        this.posX = 5220
+        this.posX = 5170
         this.posY = 300
 
         this.gunImg = new Image

@@ -1,5 +1,5 @@
 const Game = {
-    name: 'Platform Game',
+    name: 'Iron Bros',
     author: 'Daniel - Hongen',
     version: '1.0.0',
     description: 'Super Mario Bros was inspired by our game',
@@ -74,18 +74,21 @@ const Game = {
             // if (this.framesCounter % 35 === 0) this.playerTwo.cooldown++
 
             if (this.player.gun) {
-                if (this.framesCounter % 15 === 0) {
-                    this.boss.animate();
-                }
-
-                if (this.framesCounter % 580 === 0) {
-                    this.boss.meteors.push(new Meteor(this.ctx, this.boss.posX, this.boss.posY, this.boss.height, -13, this.boss.posY + this.boss.height - 250))
-                }
-                if (this.framesCounter % 190 === 0) {
-                    this.boss.meteors.push(new Meteor(this.ctx, this.boss.posX, this.boss.posY, this.boss.height, -9, this.boss.posY + this.boss.height - 340))
-                }
-                if (this.framesCounter % 410 === 0) {
-                    this.boss.meteors.push(new Meteor(this.ctx, this.boss.posX, this.boss.posY, this.boss.height, -12, this.boss.posY + this.boss.height - 420))
+                if (this.boss.posX - 50 <= this.platforms[14].posX - 50) {
+                    console.log(this.boss.posX)
+                    console.log(this.platforms[14].posX)
+                    if (this.framesCounter % 15 === 0) {
+                        this.boss.animate();
+                    }
+                    if (this.framesCounter % 580 === 0) {
+                        this.boss.meteors.push(new Meteor(this.ctx, this.boss.posX, this.boss.posY, this.boss.height, -13, this.boss.posY + this.boss.height - 250))
+                    }
+                    if (this.framesCounter % 190 === 0) {
+                        this.boss.meteors.push(new Meteor(this.ctx, this.boss.posX, this.boss.posY, this.boss.height, -9, this.boss.posY + this.boss.height - 340))
+                    }
+                    if (this.framesCounter % 410 === 0) {
+                        this.boss.meteors.push(new Meteor(this.ctx, this.boss.posX, this.boss.posY, this.boss.height, -12, this.boss.posY + this.boss.height - 420))
+                    }
                 }
             }
 
@@ -124,6 +127,11 @@ const Game = {
     drawAll() {
         this.background.draw()
         this.gun.draw()
+        if (this.player.inmune) {
+            this.ctx.fillStyle = 'red';
+            this.ctx.fillRect(0, 0, this.canvas.width, this.height);
+            this.ctx.globalAlpha = 0.7
+        } else this.ctx.globalAlpha = 1
 
         this.platforms.forEach(platform => platform.draw())
         this.enemies.forEach(enemy => enemy.draw())
@@ -136,10 +144,14 @@ const Game = {
         this.boss.draw()
         this.player.update()
         this.enemiesMovements(this.platforms)
+        if (this.player.gun) {
+            this.bossMovement(this.platforms)
+        }
         this.player.draw()
         this.playerMovement(this.player)
         this.score.draw()
         this.drawLives()
+        this.player.Alpha = 0.5
         // this.playerTwo.update()
     },
 
@@ -163,8 +175,6 @@ const Game = {
 
     winGame() {
         clearInterval(this.intervalId)
-        this.clearAll()
-        this.ctx.drawImage(this.winImg, 0, 0, this.width, this.height)
         setTimeout(() => {
             location.reload()
         }, 5000)
@@ -308,6 +318,8 @@ const Game = {
                 this.platforms[12].posY += 200
                 this.platforms[11].posY += 200
             }
+
+
         }
     },
 
@@ -395,10 +407,10 @@ const Game = {
             new Platform(this.ctx, this.posX, this.posY, 3450, 675, 800, 250),
             new Platform(this.ctx, this.posX, this.posY, 4350, 650, 150, 35),
             new Platform(this.ctx, this.posX, this.posY, 4650, 600, 150, 35),
-            new Platform(this.ctx, this.posX, this.posY, 4900, 550, 750, 300),
-            new Platform(this.ctx, this.posX, this.posY, 6000, 550, 1500, 300),
-            new Platform(this.ctx, this.posX, this.posY, 5725, 900, 200, 50),
-            new Platform(this.ctx, this.posX, this.posY, 5225, 400, 100, 35),
+            new Platform(this.ctx, this.posX, this.posY, 4900, 550, 650, 300),
+            new Platform(this.ctx, this.posX, this.posY, 5850, 550, 1500, 300),
+            new Platform(this.ctx, this.posX, this.posY, 5625, 900, 150, 50),
+            new Platform(this.ctx, this.posX, this.posY, 5185, 400, 100, 35),
 
             //--------------------------------------------------------------//
 
@@ -518,6 +530,10 @@ const Game = {
             this.enemies[3].movement(platforms[0].posX - 500, platforms[9].posX - 300),
             this.enemies[4].movement(platforms[0].posX - 500, platforms[9].posX - 300),
             this.enemies[5].movement(platforms[0].posX - 500, platforms[9].posX)
+    },
+
+    bossMovement(platforms) {
+        this.boss.movement(platforms[14].posX)
     },
 
     checkCollisions(player) {

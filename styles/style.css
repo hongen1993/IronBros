@@ -59,6 +59,7 @@ canvas {
     border-radius: 5px;
     margin-bottom: 225px;
     justify-content: center;
+    cursor: pointer;
 }
 
 

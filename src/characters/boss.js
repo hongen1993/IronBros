@@ -10,7 +10,7 @@ class Boss {
         this.width = 250
         this.height = 500
 
-        this.posX = 6000
+        this.posX = 6250
         this.posY = 150
 
         this.bossImg = new Image()
@@ -33,5 +33,11 @@ class Boss {
         this.frames++
         if (this.frames >= 6)
             this.frames = 0;
+    }
+
+    movement(positionA) {
+        if (this.posX >= positionA) {
+            this.posX -= 10
+        }
     }
 }
