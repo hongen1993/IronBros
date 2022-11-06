@@ -74,8 +74,8 @@ class Player {
         if (this.cooldown >= 1 && this.gun) this.canShoot = true
         if (this.keys.wKeyPressed) this.jump()
         if (this.keys.sKeyPressed) {
-            this.height = 30
-            if (this.powerExtra) { this.height = 60 }
+            this.height = 50
+            if (this.powerExtra) { this.height = 80 }
         }
         if (this.keys.dKeyPressed) {
             this.moveRight = true
