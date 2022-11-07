@@ -175,6 +175,8 @@ const Game = {
 
     winGame() {
         clearInterval(this.intervalId)
+        this.ctx.drawImage(this.victoryImg, 0, 0, this.width, this.height)
+
         setTimeout(() => {
             location.reload()
         }, 5000)
