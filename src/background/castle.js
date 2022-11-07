@@ -7,7 +7,7 @@ class Spaceship {
         this.width = 600
         this.height = 600
 
-        this.posX = 6900
+        this.posX = 6700
         this.posY = 0
 
         this.castle = new Image
